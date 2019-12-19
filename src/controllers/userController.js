@@ -340,16 +340,17 @@ exports.getProductAccordingToCategory = async (req, res) => {
 
 exports.addToCart = async (req, res) => {
     try {
-        let { userId, productId, quantity } = req.body
-        let dataToBeAdded = req.body
+        let { productId, quantity } = req.body
+        let userId = req.user._id
+        let dataToBeAdded = { productId,quantity,userId}
         let addedData
         let cartData = await CartModel.findOne({
-            userId: req.body.userId,
+            userId: userId,
             productId: req.body.productId
         })
         if (cartData) {
             let dataRemoved = await CartModel.remove({
-                userId: req.body.userId,
+                userId: userId,
                 productId: req.body.productId
             })
             addedData = await CartModel.create(dataToBeAdded)
