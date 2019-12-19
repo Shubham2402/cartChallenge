@@ -18,7 +18,6 @@ const status = require('../modules/status');
 const commFunc = require('../modules/commonFunction');
 const _ = require('lodash')
 
-
 exports.userSignup = async (req, res) => {
     try {
         const schema = Joi.object().keys({
@@ -338,6 +337,7 @@ exports.getProductAccordingToCategory = async (req, res) => {
     }
 }
 
+
 exports.addToCart = async (req, res) => {
     try {
         let { userId, productId, quantity } = req.body
@@ -371,6 +371,39 @@ exports.addToCart = async (req, res) => {
                     response: addedData
                 })
             }
+        }
+    } catch (error) {
+        responses.sendError(error.message, res)
+    }
+}
+
+exports.getCartDataByUser = async (req, res) => {
+    try {
+        let cartData = await CartModel.aggregate([
+            {
+                $lookup: {
+                    from: "product",
+                    localField: "productId",
+                    foreignField: "_id",
+                    as: "productData"
+                }
+            },
+            {
+                $lookup: {
+                    from: "category",
+                    localField: "productData.categoryId",
+                    foreignField: "_id",
+                    as: "categoryData"
+                }
+            }
+        ])
+        if (!cartData) {
+            throw new Error('No data found.')
+        } else {
+            res.status(200).json({
+                message: "Cart data.",
+                response: cartData
+            })
         }
     } catch (error) {
         responses.sendError(error.message, res)

@@ -24,5 +24,6 @@ exports.getRouter = (app) => {
 	app.route('/user/getAllProduct').get(auth.userAccessToken,userController.getAllProduct)
 	app.route('/user/getProductAccordingToCategory').post(auth.userAccessToken,userController.getProductAccordingToCategory)
 	app.route('/user/addToCart').post(auth.userAccessToken,userController.addToCart)
+	app.route('/user/getCartDataByUser').get(auth.userAccessToken,userController.getCartDataByUser)
 	return app;
 }
