@@ -18,6 +18,7 @@ const status = require('../modules/status');
 const commFunc = require('../modules/commonFunction');
 const _ = require('lodash')
 
+//Signup for creating new user
 exports.userSignup = async (req, res) => {
     try {
         const schema = Joi.object().keys({
@@ -109,7 +110,7 @@ exports.userSignup = async (req, res) => {
     }
 }
 
-
+//Login into existing user.
 exports.userLogin = async (req, res) => {
     try {
         const schema = Joi.object().keys({
@@ -193,7 +194,7 @@ exports.userLogin = async (req, res) => {
     }
 }
 
-
+//Category addition so that we can get categories
 exports.addCategory = async (req, res) => {
     try {
         const schema = Joi.object().keys({
@@ -229,6 +230,7 @@ exports.addCategory = async (req, res) => {
     }
 }
 
+// get categories
 exports.getAllCategory = async (req, res) => {
     try {
         //if you want to show all data of categories then commented code will work
@@ -249,7 +251,7 @@ exports.getAllCategory = async (req, res) => {
     }
 }
 
-
+//Add new Product
 exports.addProduct = async (req, res) => {
     try {
         const schema = Joi.object().keys({
@@ -287,7 +289,7 @@ exports.addProduct = async (req, res) => {
     }
 }
 
-
+//Get all product list
 exports.getAllProduct = async (req, res) => {
     try {
         //if you want to show all data of categories then commented code will work
@@ -317,6 +319,7 @@ exports.getAllProduct = async (req, res) => {
     }
 }
 
+//Get all product of specific category
 exports.getProductAccordingToCategory = async (req, res) => {
     try {
         let { categoryId } = req.body
@@ -337,7 +340,7 @@ exports.getProductAccordingToCategory = async (req, res) => {
     }
 }
 
-
+//Add to cart by user
 exports.addToCart = async (req, res) => {
     try {
         let { productId, quantity } = req.body
@@ -378,6 +381,7 @@ exports.addToCart = async (req, res) => {
     }
 }
 
+//Get cart data by user
 exports.getCartDataByUser = async (req, res) => {
     try {
         let cartData = await CartModel.aggregate([
